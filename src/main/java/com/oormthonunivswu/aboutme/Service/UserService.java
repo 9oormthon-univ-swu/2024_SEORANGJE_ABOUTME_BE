@@ -1,5 +1,6 @@
 package com.oormthonunivswu.aboutme.Service;
 
+import com.oormthonunivswu.aboutme.Config.JwtProvider;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
@@ -14,6 +15,8 @@ public class UserService {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
+    private final JwtProvider jwtProvider;
 
     public String join(JoinRequestDto joinRequestDto) {
         // 클라이언트로부터 받은 회원가입 정보
@@ -52,7 +55,11 @@ public class UserService {
 
         // 비밀번호 일치 여부 확인
         if(passwordEncoder.matches(rawPassword, byEmail.getPassword())){
-            return "로그인 성공";
+
+            // JWT 토큰 반환
+            String jwtToken = jwtProvider.generateJwtToken(byEmail.getId(), byEmail.getEmail(), byEmail.getUsername());
+
+            return "로그인 성공 " + jwtToken;
         }
 
         return "로그인 실패";

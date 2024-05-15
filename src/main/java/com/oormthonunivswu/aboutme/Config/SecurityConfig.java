@@ -1,5 +1,6 @@
 package com.oormthonunivswu.aboutme.Config;
 
+import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,5 +33,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
 
         return http.build();
+    }
+
+    private final UserRepository userRepository;
+    @Bean
+    public JwtProvider jwtTokenProvider() {
+        return new JwtProvider(userRepository);
     }
 }
