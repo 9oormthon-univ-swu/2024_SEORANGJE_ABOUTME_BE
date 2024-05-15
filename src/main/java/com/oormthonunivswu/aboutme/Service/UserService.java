@@ -1,6 +1,7 @@
 package com.oormthonunivswu.aboutme.Service;
 
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
+import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,4 +44,17 @@ public class UserService {
         return "회원가입 성공";
     }
 
+    public String login(LoginRequestDto loginRequestDto) {
+        String email = loginRequestDto.getEmail();
+        String rawPassword = loginRequestDto.getPassword();
+
+        User byEmail = userRepository.findByEmail(email);
+
+        // 비밀번호 일치 여부 확인
+        if(passwordEncoder.matches(rawPassword, byEmail.getPassword())){
+            return "로그인 성공";
+        }
+
+        return "로그인 실패";
+    }
 }

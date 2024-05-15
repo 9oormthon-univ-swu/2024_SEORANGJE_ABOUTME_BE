@@ -1,6 +1,7 @@
 package com.oormthonunivswu.aboutme.Controller;
 
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
+import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,5 +21,10 @@ public class UserController {
     public String join(@RequestBody JoinRequestDto joinRequestDto) {
 
         return userService.join(joinRequestDto);
+    }
+
+    @PostMapping("/api/login")
+    public String login(@RequestBody LoginRequestDto loginRequestDto) {
+        return userService.login(loginRequestDto);
     }
 }
