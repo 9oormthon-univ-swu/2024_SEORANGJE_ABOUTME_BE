@@ -61,6 +61,14 @@ public class UserService {
         newUser.setJob(job);
 
         // 사용자 저장
+        User savedUser = userRepository.save(newUser);
+
+
+        // URL 생성 및 설정
+        Long userId = savedUser.getId();
+        String url = "http://localhost:8080/user/" + userId;
+        newUser.setUrl(url);
+
         userRepository.save(newUser);
 
         return "회원가입 성공";
