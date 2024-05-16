@@ -23,7 +23,16 @@ public class UserService {
         String email = joinRequestDto.getEmail();
         String password = joinRequestDto.getPassword();
         String name = joinRequestDto.getUsername();
-        // (필요한 경우 추가 정보도 받아올 수 있음)
+        boolean flower = joinRequestDto.getFlower();
+        boolean animal = joinRequestDto.getAnimal();
+        boolean season = joinRequestDto.getSeason();
+        boolean color = joinRequestDto.getColor();
+        boolean charac = joinRequestDto.getCharac();
+        boolean place = joinRequestDto.getPlace();
+        boolean food = joinRequestDto.getFood();
+        boolean hobby = joinRequestDto.getHobby();
+        boolean job = joinRequestDto.getJob();
+
 
         // 이메일이 이미 존재하는지 확인
         User existingUser = userRepository.findByEmail(email);
@@ -39,7 +48,15 @@ public class UserService {
         newUser.setEmail(email);
         newUser.setPassword(encodedPassword);
         newUser.setUsername(name);
-        // (필요한 경우 추가 정보도 설정 가능)
+        newUser.setFlower(flower);
+        newUser.setAnimal(animal);
+        newUser.setSeason(season);
+        newUser.setColor(color);
+        newUser.setCharac(charac);
+        newUser.setPlace(place);
+        newUser.setFood(food);
+        newUser.setHobby(hobby);
+        newUser.setJob(job);
 
         // 사용자 저장
         userRepository.save(newUser);

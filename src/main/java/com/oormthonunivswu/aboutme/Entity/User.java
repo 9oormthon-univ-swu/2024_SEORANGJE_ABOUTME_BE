@@ -1,9 +1,6 @@
 package com.oormthonunivswu.aboutme.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +19,34 @@ public class User {
     private String username;
     private String email;
     private String password;
+    @Column(name = "flower")
+    private Boolean flower;
+
+    @Column(name = "animal")
+    private Boolean animal;
+
+    @Column(name = "season")
+    private Boolean season;
+
+    @Column(name = "color")
+    private Boolean color;
+
+    @Column(name = "charac")
+    private Boolean charac;
+
+    @Column(name = "place")
+    private Boolean place;
+
+    @Column(name = "food")
+    private Boolean food;
+
+    @Column(name = "hobby")
+    private Boolean hobby;
+
+    @Column(name = "job")
+    private Boolean job;
+
+    @Column(name = "url")
+    private String url;
 
 }
