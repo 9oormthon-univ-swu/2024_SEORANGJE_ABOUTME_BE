@@ -3,6 +3,7 @@ package com.oormthonunivswu.aboutme.Controller;
 import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
+import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -43,5 +44,10 @@ public class UserController {
 
         return sb.toString();
 
+    }
+
+    @GetMapping("/user/{userId}")
+    public User getUser(@PathVariable long userId) {
+        return userService.getUserById(userId);
     }
 }
