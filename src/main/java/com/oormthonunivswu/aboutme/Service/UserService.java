@@ -67,7 +67,7 @@ public class UserService {
 
         // URL 생성 및 설정
         UUID userId = savedUser.getId();
-        String url = "http://localhost:8080/user/" + userId;
+        String url = "http://localhost:8080/" + userId;
         newUser.setUrl(url);
 
         userRepository.save(newUser);
