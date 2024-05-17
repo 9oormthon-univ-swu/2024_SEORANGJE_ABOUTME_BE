@@ -1,15 +1,16 @@
 package com.oormthonunivswu.aboutme.Controller;
 
-import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -33,19 +34,12 @@ public class UserController {
 
 
     @GetMapping("/api/url")
-    public String info(@AuthenticationPrincipal PrincipalDetails principalDetails, Authentication authentication) {
-        System.out.println("PrincipalDetails " + principalDetails);
-        System.out.println("authentication " + authentication);
+    public Map<String, Object> info(Principal principal) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("principalDetails", principal);
+        response.put("authentication", ((Authentication) principal).getAuthorities()); // 권한 정보도 추가할 수 있습니다.
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("PrincipalDetails ");
-        sb.append(principalDetails);
-        sb.append("\n\n");
-        sb.append("authentication ");
-        sb.append(authentication);
-
-        return sb.toString();
-
+        return response;
     }
 
     @GetMapping("/{userId}")
