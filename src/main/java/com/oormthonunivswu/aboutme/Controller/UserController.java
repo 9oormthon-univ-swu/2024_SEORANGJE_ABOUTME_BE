@@ -32,7 +32,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/info")
+    @GetMapping("/api/url")
     public String info(@AuthenticationPrincipal PrincipalDetails principalDetails, Authentication authentication) {
         System.out.println("PrincipalDetails " + principalDetails);
         System.out.println("authentication " + authentication);
