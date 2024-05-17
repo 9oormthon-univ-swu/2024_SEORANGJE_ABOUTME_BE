@@ -36,6 +36,11 @@ public class UserController {
         return userService.getInfo(principal);
     }
 
+    @GetMapping("/api/url")
+    public Map<String, Object> url(Principal principal) {
+        return userService.getUrl(principal);
+    }
+
     @GetMapping("/{userId}")
     public User getUser(@PathVariable UUID userId) {
         return userService.getUserById(userId);

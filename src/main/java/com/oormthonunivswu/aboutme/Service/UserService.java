@@ -1,6 +1,7 @@
 package com.oormthonunivswu.aboutme.Service;
 
 import com.oormthonunivswu.aboutme.Config.JwtProvider;
+import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
@@ -107,6 +108,22 @@ public class UserService {
         Map<String, Object> response = new HashMap<>();
         response.put("principalDetails", principal);
         response.put("authentication", ((Authentication) principal).getAuthorities()); // 권한 정보도 추가할 수 있습니다.
+
+        return response;
+    }
+    public Map<String, Object> getUrl(Principal principal) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (principal != null) {
+            String url = null;
+            Object principalObject = ((Authentication) principal).getPrincipal();
+            if (principalObject instanceof PrincipalDetails) {
+                url = ((PrincipalDetails) principalObject).getUser().getUrl();
+            }
+            response.put("url", url);
+        } else {
+            response.put("url", null);
+        }
 
         return response;
     }
