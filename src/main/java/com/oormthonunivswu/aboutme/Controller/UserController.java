@@ -44,8 +44,13 @@ public class UserController {
 
 
     @GetMapping("/api/info")
-    public Map<String, Object> info(Principal principal) {
-        return userService.getInfo(principal);
+    public ResponseEntity<Object> info(Principal principal) {
+        try {
+            Map<String, Object> info = userService.getInfo(principal);
+            return ResponseEntity.ok(info);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("/api/url")
