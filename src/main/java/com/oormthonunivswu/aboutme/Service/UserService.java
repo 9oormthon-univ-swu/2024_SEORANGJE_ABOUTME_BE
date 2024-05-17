@@ -6,9 +6,13 @@ import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -97,5 +101,13 @@ public class UserService {
     public User getUserById(UUID userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.orElse(null);
+    }
+
+    public Map<String, Object> getInfo(Principal principal) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("principalDetails", principal);
+        response.put("authentication", ((Authentication) principal).getAuthorities()); // 권한 정보도 추가할 수 있습니다.
+
+        return response;
     }
 }
