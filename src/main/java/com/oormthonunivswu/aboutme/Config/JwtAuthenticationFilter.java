@@ -14,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -68,7 +69,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
-        Long id = principalDetails.getUser().getId();
+        UUID id = principalDetails.getUser().getId();
         String email = principalDetails.getUser().getEmail();
         String userName = principalDetails.getUser().getUsername();
 

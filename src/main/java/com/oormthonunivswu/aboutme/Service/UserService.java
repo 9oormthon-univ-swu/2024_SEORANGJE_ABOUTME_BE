@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +66,7 @@ public class UserService {
 
 
         // URL 생성 및 설정
-        Long userId = savedUser.getId();
+        UUID userId = savedUser.getId();
         String url = "http://localhost:8080/user/" + userId;
         newUser.setUrl(url);
 
@@ -81,10 +82,10 @@ public class UserService {
         User byEmail = userRepository.findByEmail(email);
 
         // 비밀번호 일치 여부 확인
-        if(passwordEncoder.matches(rawPassword, byEmail.getPassword())){
+        if (passwordEncoder.matches(rawPassword, byEmail.getPassword())) {
 
             // JWT 토큰 반환
-            String jwtToken = jwtProvider.generateJwtToken(byEmail.getId(), byEmail.getEmail(), byEmail.getUsername());
+            String jwtToken = jwtProvider.generateJwtToken(UUID.fromString(byEmail.getId().toString()), byEmail.getEmail(), byEmail.getUsername());
 
             return "로그인 성공 " + jwtToken;
         }
@@ -93,7 +94,7 @@ public class UserService {
     }
 
 
-    public User getUserById(long userId) {
+    public User getUserById(UUID userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.orElse(null);
     }
