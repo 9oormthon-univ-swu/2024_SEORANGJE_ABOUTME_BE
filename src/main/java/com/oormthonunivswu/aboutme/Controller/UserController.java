@@ -5,11 +5,9 @@ import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,7 +31,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/url")
+    @GetMapping("/api/info")
     public Map<String, Object> info(Principal principal) {
         return userService.getInfo(principal);
     }
