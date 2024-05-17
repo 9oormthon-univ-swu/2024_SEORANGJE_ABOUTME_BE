@@ -86,17 +86,22 @@ public class UserService {
 
         User byEmail = userRepository.findByEmail(email);
 
+        // 사용자가 존재하지 않을 때
+        if (byEmail == null) {
+            return "로그인 실패 - 사용자가 존재하지 않습니다.";
+        }
+
         // 비밀번호 일치 여부 확인
         if (passwordEncoder.matches(rawPassword, byEmail.getPassword())) {
-
             // JWT 토큰 반환
             String jwtToken = jwtProvider.generateJwtToken(UUID.fromString(byEmail.getId().toString()), byEmail.getEmail(), byEmail.getUsername());
-
             return "로그인 성공 " + jwtToken;
         }
 
-        return "로그인 실패";
+        // 비밀번호가 일치하지 않을 때
+        return "로그인 실패 - 비밀번호가 일치하지 않습니다.";
     }
+
 
 
     public User getUserById(UUID userId) {
