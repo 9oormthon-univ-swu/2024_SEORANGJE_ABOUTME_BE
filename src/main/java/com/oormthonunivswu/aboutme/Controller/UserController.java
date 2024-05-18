@@ -3,11 +3,14 @@ package com.oormthonunivswu.aboutme.Controller;
 import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
+import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping
@@ -43,5 +46,10 @@ public class UserController {
 
         return sb.toString();
 
+    }
+
+    @GetMapping("/user/{userId}")
+    public User getUser(@PathVariable UUID userId) {
+        return userService.getUserById(userId);
     }
 }

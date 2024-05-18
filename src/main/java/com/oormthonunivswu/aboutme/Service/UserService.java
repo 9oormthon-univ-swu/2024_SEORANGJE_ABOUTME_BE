@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -59,6 +62,14 @@ public class UserService {
         newUser.setJob(job);
 
         // 사용자 저장
+        User savedUser = userRepository.save(newUser);
+
+
+        // URL 생성 및 설정
+        UUID userId = savedUser.getId();
+        String url = "http://localhost:8080/user/" + userId;
+        newUser.setUrl(url);
+
         userRepository.save(newUser);
 
         return "회원가입 성공";
@@ -71,14 +82,20 @@ public class UserService {
         User byEmail = userRepository.findByEmail(email);
 
         // 비밀번호 일치 여부 확인
-        if(passwordEncoder.matches(rawPassword, byEmail.getPassword())){
+        if (passwordEncoder.matches(rawPassword, byEmail.getPassword())) {
 
             // JWT 토큰 반환
-            String jwtToken = jwtProvider.generateJwtToken(byEmail.getId(), byEmail.getEmail(), byEmail.getUsername());
+            String jwtToken = jwtProvider.generateJwtToken(UUID.fromString(byEmail.getId().toString()), byEmail.getEmail(), byEmail.getUsername());
 
             return "로그인 성공 " + jwtToken;
         }
 
         return "로그인 실패";
+    }
+
+
+    public User getUserById(UUID userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.orElse(null);
     }
 }
