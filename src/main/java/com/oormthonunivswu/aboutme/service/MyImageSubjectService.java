@@ -1,8 +1,7 @@
-package com.oormthonunivswu.aboutme.MyImageSubject;
+package com.oormthonunivswu.aboutme.service;
 
-import com.oormthonunivswu.aboutme.MyImage.MyImageService;
-import com.oormthonunivswu.aboutme.User.UserEntity;
-import com.oormthonunivswu.aboutme.User.UserService;
+import com.oormthonunivswu.aboutme.dto.MyImageSubjectDTO;
+import com.oormthonunivswu.aboutme.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

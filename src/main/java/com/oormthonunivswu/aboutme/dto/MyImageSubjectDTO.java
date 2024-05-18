@@ -1,4 +1,4 @@
-package com.oormthonunivswu.aboutme.MyImageSubject;
+package com.oormthonunivswu.aboutme.dto;
 
 import java.util.Map;
 
