@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,7 +19,7 @@ public class MyImageEntity {
     private Long id;
 
     @Column(name = "user_id")
-    private Long userId;
+    private UUID userId;
 
     @Column(name = "guest_nickname")
     private String guestNickname;
@@ -54,7 +56,7 @@ public class MyImageEntity {
 
 
     @Builder
-    public MyImageEntity(Long userId, String guestNickname, String imageComment,
+    public MyImageEntity(UUID userId, String guestNickname, String imageComment,
                       Long flower, Long animal, Long season, Long color,
                       Long charac, Long place, Long food, Long hobby, Long job) {
         this.userId = userId;

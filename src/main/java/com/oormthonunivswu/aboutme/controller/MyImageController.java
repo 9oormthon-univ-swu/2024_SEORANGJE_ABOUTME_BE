@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/MyImage")
@@ -19,7 +20,7 @@ public class MyImageController {
     private MyImageService myImageService;
 
     @GetMapping("/{user_id}")
-    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable Long user_id){
+    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable UUID user_id){
         return myImageService.getAllMyImagesByUserId(user_id);
     }
 }
