@@ -72,7 +72,7 @@ public class UserService {
 
         // URL 생성 및 설정
         UUID userId = savedUser.getId();
-        String url = "http://localhost:8081/" + userId;
+        String url = "https://port-0-seorangje-aboutme-be-2024-1ru12mlwc1mxvw.sel5.cloudtype.app/" + userId;
         newUser.setUrl(url);
 
         userRepository.save(newUser);
