@@ -132,4 +132,8 @@ public class UserService {
 
         return response;
     }
+
+    public User findById(UUID id){
+        return userRepository.findById(id).orElse(null);
+    }
 }
