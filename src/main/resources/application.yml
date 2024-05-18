@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1/2024seoranje_bbe
+    username: root
+    password: ASdf123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8081
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        hbm2ddl:
+          auto: update
+        default_batch_fetch_size: 1000
