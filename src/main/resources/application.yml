@@ -9,8 +9,8 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_url}:${DB_port}/${DB_dataBaseName}?serverTimezone=Asia/Seoul
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DB_url}:${DB_port}/${DB_dataBaseName}?serverTimezone=Asia/Seoul
     username: ${DB_name} #유저네임
     password: ${DB_password} #암호
 
