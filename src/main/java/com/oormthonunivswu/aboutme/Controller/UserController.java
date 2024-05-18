@@ -1,15 +1,16 @@
 package com.oormthonunivswu.aboutme.Controller;
 
-import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -21,34 +22,43 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/api/join")
-    public String join(@RequestBody JoinRequestDto joinRequestDto) {
-
-        return userService.join(joinRequestDto);
+    public ResponseEntity<Object> join(@RequestBody JoinRequestDto joinRequestDto) {
+        String response = userService.join(joinRequestDto);
+        if (response.equals("회원가입 성공")) {
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "회원가입 성공"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", response));
+        }
     }
 
     @PostMapping("/api/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto) {
-        return userService.login(loginRequestDto);
+    public ResponseEntity<Object> login(@RequestBody LoginRequestDto loginRequestDto) {
+        String response = userService.login(loginRequestDto);
+        if (response.startsWith("로그인 성공")) {
+            String jwtToken = response.replace("로그인 성공 ", "");
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "로그인 성공", "token", jwtToken));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인 실패"));
+        }
     }
 
 
     @GetMapping("/api/info")
-    public String info(@AuthenticationPrincipal PrincipalDetails principalDetails, Authentication authentication) {
-        System.out.println("PrincipalDetails " + principalDetails);
-        System.out.println("authentication " + authentication);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("PrincipalDetails ");
-        sb.append(principalDetails);
-        sb.append("\n\n");
-        sb.append("authentication ");
-        sb.append(authentication);
-
-        return sb.toString();
-
+    public ResponseEntity<Object> info(Principal principal) {
+        try {
+            Map<String, Object> info = userService.getInfo(principal);
+            return ResponseEntity.ok(info);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", e.getMessage()));
+        }
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/api/url")
+    public Map<String, Object> url(Principal principal) {
+        return userService.getUrl(principal);
+    }
+
+    @GetMapping("/{userId}")
     public User getUser(@PathVariable UUID userId) {
         return userService.getUserById(userId);
     }

@@ -1,14 +1,19 @@
 package com.oormthonunivswu.aboutme.Service;
 
 import com.oormthonunivswu.aboutme.Config.JwtProvider;
+import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,7 +72,7 @@ public class UserService {
 
         // URL 생성 및 설정
         UUID userId = savedUser.getId();
-        String url = "http://localhost:8080/user/" + userId;
+        String url = "http://localhost:8080/" + userId;
         newUser.setUrl(url);
 
         userRepository.save(newUser);
@@ -81,21 +86,50 @@ public class UserService {
 
         User byEmail = userRepository.findByEmail(email);
 
+        // 사용자가 존재하지 않을 때
+        if (byEmail == null) {
+            return "로그인 실패 - 사용자가 존재하지 않습니다.";
+        }
+
         // 비밀번호 일치 여부 확인
         if (passwordEncoder.matches(rawPassword, byEmail.getPassword())) {
-
             // JWT 토큰 반환
             String jwtToken = jwtProvider.generateJwtToken(UUID.fromString(byEmail.getId().toString()), byEmail.getEmail(), byEmail.getUsername());
-
             return "로그인 성공 " + jwtToken;
         }
 
-        return "로그인 실패";
+        // 비밀번호가 일치하지 않을 때
+        return "로그인 실패 - 비밀번호가 일치하지 않습니다.";
     }
+
 
 
     public User getUserById(UUID userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.orElse(null);
+    }
+
+    public Map<String, Object> getInfo(Principal principal) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("principalDetails", principal);
+        response.put("authentication", ((Authentication) principal).getAuthorities()); // 권한 정보도 추가할 수 있습니다.
+
+        return response;
+    }
+    public Map<String, Object> getUrl(Principal principal) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (principal != null) {
+            String url = null;
+            Object principalObject = ((Authentication) principal).getPrincipal();
+            if (principalObject instanceof PrincipalDetails) {
+                url = ((PrincipalDetails) principalObject).getUser().getUrl();
+            }
+            response.put("url", url);
+        } else {
+            response.put("url", null);
+        }
+
+        return response;
     }
 }
