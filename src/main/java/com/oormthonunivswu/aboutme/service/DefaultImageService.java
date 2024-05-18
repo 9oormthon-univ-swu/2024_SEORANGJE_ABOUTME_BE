@@ -1,10 +1,8 @@
-package com.oormthonunivswu.aboutme.service;
+package com.oormthonunivswu.aboutme.Service;
 
-import com.oormthonunivswu.aboutme.dto.DefaultImageDTO;
-import com.oormthonunivswu.aboutme.entity.UserEntity;
-import com.oormthonunivswu.aboutme.entity.DefaultImageEntity;
-import com.oormthonunivswu.aboutme.repository.DefaultImageRepository;
-import com.oormthonunivswu.aboutme.repository.UserRepository;
+import com.oormthonunivswu.aboutme.Entity.DefaultImageEntity;
+import com.oormthonunivswu.aboutme.Entity.User;
+import com.oormthonunivswu.aboutme.Repository.DefaultImageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultImageService {
@@ -20,17 +17,17 @@ public class DefaultImageService {
     @Autowired
     private DefaultImageRepository defaultImageRepository;
 
-    public List<DefaultImageEntity> getDefaultImagesByUserCategory(UserEntity user){
+    public List<DefaultImageEntity> getDefaultImagesByUserCategory(User user){
         List<String> categories = new ArrayList<>();
-        if (user.isFlower()) categories.add("flower");
-        if (user.isAnimal()) categories.add("animal");
-        if (user.isSeason()) categories.add("season");
-        if (user.isColor()) categories.add("color");
-        if (user.isCharac()) categories.add("charac");
-        if (user.isPlace()) categories.add("place");
-        if (user.isFood()) categories.add("food");
-        if (user.isHobby()) categories.add("hobby");
-        if (user.isJob()) categories.add("job");
+        if (user.getFlower()) categories.add("flower");
+        if (user.getAnimal()) categories.add("animal");
+        if (user.getSeason()) categories.add("season");
+        if (user.getColor()) categories.add("color");
+        if (user.getCharac()) categories.add("charac");
+        if (user.getPlace()) categories.add("place");
+        if (user.getFood()) categories.add("food");
+        if (user.getHobby()) categories.add("hobby");
+        if (user.getJob()) categories.add("job");
         return defaultImageRepository.findByCategoryIn(categories);
 
 

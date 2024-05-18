@@ -1,9 +1,13 @@
-package com.oormthonunivswu.aboutme.controller;
+package com.oormthonunivswu.aboutme.Controller;
 
-import com.oormthonunivswu.aboutme.dto.MyImageDTO;
-import com.oormthonunivswu.aboutme.service.MyImageService;
+
+import com.oormthonunivswu.aboutme.Dto.MyImageDTO;
+import com.oormthonunivswu.aboutme.Service.MyImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

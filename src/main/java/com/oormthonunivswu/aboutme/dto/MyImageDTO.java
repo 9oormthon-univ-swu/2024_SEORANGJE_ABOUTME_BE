@@ -1,4 +1,4 @@
-package com.oormthonunivswu.aboutme.dto;
+package com.oormthonunivswu.aboutme.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.oormthonunivswu.aboutme.dto;
+package com.oormthonunivswu.aboutme.Dto;
 
 import java.util.Map;
 

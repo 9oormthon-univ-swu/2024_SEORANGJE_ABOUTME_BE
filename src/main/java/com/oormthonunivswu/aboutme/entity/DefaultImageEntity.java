@@ -1,4 +1,4 @@
-package com.oormthonunivswu.aboutme.entity;
+package com.oormthonunivswu.aboutme.Entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

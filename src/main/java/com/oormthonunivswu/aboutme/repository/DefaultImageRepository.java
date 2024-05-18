@@ -1,6 +1,7 @@
-package com.oormthonunivswu.aboutme.repository;
+package com.oormthonunivswu.aboutme.Repository;
 
-import com.oormthonunivswu.aboutme.entity.DefaultImageEntity;
+
+import com.oormthonunivswu.aboutme.Entity.DefaultImageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

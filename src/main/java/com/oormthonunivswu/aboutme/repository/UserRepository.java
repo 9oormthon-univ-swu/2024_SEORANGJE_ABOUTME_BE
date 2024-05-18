@@ -1,15 +1,13 @@
-package com.oormthonunivswu.aboutme.repository;
+package com.oormthonunivswu.aboutme.Repository;
 
-import com.oormthonunivswu.aboutme.entity.UserEntity;
+import com.oormthonunivswu.aboutme.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
-@Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long>{
-    Optional<UserEntity> findById(Long id);
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 
+    Optional<User> findById(UUID userId);
 }
-
-
