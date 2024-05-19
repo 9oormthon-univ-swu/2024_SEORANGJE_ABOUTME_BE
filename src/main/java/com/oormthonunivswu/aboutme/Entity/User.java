@@ -54,5 +54,4 @@ public class User {
 
     @Column(name = "url")
     private String url;
-
 }

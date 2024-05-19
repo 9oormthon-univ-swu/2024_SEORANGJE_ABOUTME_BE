@@ -74,8 +74,9 @@ public class UserService {
         User savedUser = userRepository.save(newUser);
 
         // URL 생성 및 설정
-        String url = "http://localhost:8081/" + uuid;
+        String url = "https://port-0-seorangje-aboutme-be-2024-1ru12mlwc1mxvw.sel5.cloudtype.app/" + uuid;
         savedUser.setUrl(url);
+
 
         userRepository.save(savedUser);
 
@@ -131,5 +132,6 @@ public class UserService {
     public User getUserByUuid(UUID uuid) {
         Optional<User> userOptional = userRepository.findByUuid(uuid);
         return userOptional.orElse(null);
+
     }
 }
