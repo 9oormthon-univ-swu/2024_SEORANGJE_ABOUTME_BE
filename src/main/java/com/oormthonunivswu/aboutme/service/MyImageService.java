@@ -17,7 +17,7 @@ public class MyImageService {
     @Autowired
     private MyImageRepository myImageRepository;
 
-    public List<MyImageDTO> getAllMyImagesByUserId(UUID user_id){
+    public List<MyImageDTO> getAllMyImagesByUserId(User user_id){
         List<MyImageEntity> myImageEntities = myImageRepository.findByUserId(user_id);
         return myImageEntities.stream()
                 .map(image-> new MyImageDTO(image.getId(), image.getGuestNickname(),image.getImageComment()))

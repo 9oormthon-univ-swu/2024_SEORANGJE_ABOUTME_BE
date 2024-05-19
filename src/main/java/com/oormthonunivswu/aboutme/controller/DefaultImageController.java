@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,7 +23,7 @@ public class DefaultImageController {
     private UserRepository userRepository;
 
     @GetMapping("/{user_id}")
-    public List<DefaultImageDTO> getDefaultImages(@PathVariable UUID user_id){
+    public List<DefaultImageDTO> getDefaultImages(@PathVariable Long user_id){
         User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("User not found"));
         List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
         return defaultImageEntities.stream()

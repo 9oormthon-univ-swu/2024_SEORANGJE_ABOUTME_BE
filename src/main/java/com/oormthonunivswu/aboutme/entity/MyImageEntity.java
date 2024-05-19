@@ -18,8 +18,9 @@ public class MyImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userId;
 
     @Column(name = "guest_nickname")
     private String guestNickname;
@@ -27,38 +28,47 @@ public class MyImageEntity {
     @Column(name = "image_comment")
     private String imageComment;
 
-    @Column(name = "flower")
-    private Long flower;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flower")
+    private ImageEntity flower;
 
-    @Column (name = "animal")
-    private Long animal;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal")
+    private ImageEntity animal;
 
-    @Column(name = "season")
-    private Long season;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "season")
+    private ImageEntity season;
 
-    @Column (name = "color")
-    private Long color;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "color")
+    private ImageEntity color;
 
-    @Column(name = "charac")
-    private Long charac;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "charac")
+    private ImageEntity charac;
 
-    @Column (name = "place")
-    private Long place;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place")
+    private ImageEntity place;
 
-    @Column(name = "food")
-    private Long food;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food")
+    private ImageEntity food;
 
-    @Column (name = "hobby")
-    private Long hobby;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hobby")
+    private ImageEntity hobby;
 
-    @Column(name = "job")
-    private Long job;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job")
+    private ImageEntity job;
 
 
     @Builder
-    public MyImageEntity(UUID userId, String guestNickname, String imageComment,
-                      Long flower, Long animal, Long season, Long color,
-                      Long charac, Long place, Long food, Long hobby, Long job) {
+    public MyImageEntity(User userId, String guestNickname, String imageComment,
+                         ImageEntity flower, ImageEntity animal, ImageEntity season, ImageEntity color,
+                         ImageEntity charac, ImageEntity place, ImageEntity food, ImageEntity hobby, ImageEntity job) {
         this.userId = userId;
         this.guestNickname = guestNickname;
         this.imageComment = imageComment;

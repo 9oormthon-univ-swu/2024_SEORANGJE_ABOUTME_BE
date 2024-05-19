@@ -20,7 +20,7 @@ public class MyImageController {
     private MyImageService myImageService;
 
     @GetMapping("/{user_id}")
-    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable UUID user_id){
+    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable User user_id){
         return myImageService.getAllMyImagesByUserId(user_id);
     }
 }
