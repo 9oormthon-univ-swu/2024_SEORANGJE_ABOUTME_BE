@@ -15,10 +15,13 @@ import java.util.UUID;
 @Builder
 public class User {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // IDENTITY로 변경
+    private Long id;
+
+    @Column(columnDefinition = "BINARY(16)", unique = true)
+    private UUID uuid;
     private String username;
     private String email;
     private String password;

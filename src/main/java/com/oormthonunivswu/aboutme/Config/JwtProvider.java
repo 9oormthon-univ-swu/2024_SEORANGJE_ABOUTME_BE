@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class JwtProvider {
@@ -36,17 +35,14 @@ public class JwtProvider {
 
 
     // Jwt 토큰 생성
-    public String generateJwtToken(UUID id, String email, String username){
+    public String generateJwtToken(Long id, String email, String username){
 
         Date tokenExpiration = new Date(System.currentTimeMillis() + (EXPIRE_TIME));
-
-        // UUID를 문자열로 변환
-        String IdString = id.toString();
 
         String jwtToken = JWT.create()
                 .withSubject(email) //토큰 이름
                 .withExpiresAt(tokenExpiration)
-                .withClaim("id", IdString)
+                .withClaim("id", id)
                 .withClaim("email", email)
                 .withClaim("username", username)
                 .sign(this.getSign());

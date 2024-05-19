@@ -66,16 +66,18 @@ public class UserService {
         newUser.setHobby(hobby);
         newUser.setJob(job);
 
+        // 새로운 UUID 생성
+        UUID uuid = UUID.randomUUID();
+        newUser.setUuid(uuid);
+
         // 사용자 저장
         User savedUser = userRepository.save(newUser);
 
-
         // URL 생성 및 설정
-        UUID userId = savedUser.getId();
-        String url = "http://localhost:8081/" + userId;
-        newUser.setUrl(url);
+        String url = "http://localhost:8081/" + uuid;
+        savedUser.setUrl(url);
 
-        userRepository.save(newUser);
+        userRepository.save(savedUser);
 
         return "회원가입 성공";
     }
@@ -94,19 +96,12 @@ public class UserService {
         // 비밀번호 일치 여부 확인
         if (passwordEncoder.matches(rawPassword, byEmail.getPassword())) {
             // JWT 토큰 반환
-            String jwtToken = jwtProvider.generateJwtToken(UUID.fromString(byEmail.getId().toString()), byEmail.getEmail(), byEmail.getUsername());
+            String jwtToken = jwtProvider.generateJwtToken(byEmail.getId(), byEmail.getEmail(), byEmail.getUsername());
             return "로그인 성공 " + jwtToken;
         }
 
         // 비밀번호가 일치하지 않을 때
         return "로그인 실패 - 비밀번호가 일치하지 않습니다.";
-    }
-
-
-
-    public User getUserById(UUID userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.orElse(null);
     }
 
     public Map<String, Object> getInfo(Principal principal) {
@@ -131,5 +126,10 @@ public class UserService {
         }
 
         return response;
+    }
+
+    public User getUserByUuid(UUID uuid) {
+        Optional<User> userOptional = userRepository.findByUuid(uuid);
+        return userOptional.orElse(null);
     }
 }
