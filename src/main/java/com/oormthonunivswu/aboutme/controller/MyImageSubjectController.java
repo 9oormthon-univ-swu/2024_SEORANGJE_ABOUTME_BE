@@ -25,7 +25,7 @@ public class MyImageSubjectController {
 
     //MyImageSubject 반환 API
     @GetMapping("/MyImageSubject/{user_id}")
-    public MyImageSubjectDTO getSubjects(@PathVariable UUID user_id){
+    public MyImageSubjectDTO getSubjects(@PathVariable Long user_id){
         return myImageSubjectService.getMyImageSubject(user_id);
     }
 }

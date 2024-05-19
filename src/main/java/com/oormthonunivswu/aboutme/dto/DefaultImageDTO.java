@@ -3,22 +3,14 @@ package com.oormthonunivswu.aboutme.Dto;
 
 import lombok.Getter;
 import lombok.Setter;
-
+@Getter
+@Setter
 public class DefaultImageDTO {
-    @Getter
-    @Setter
+
     private Long id;
-    @Getter
-    @Setter
     private String category;
-    @Getter
-    @Setter
     private String originalFileName;
-    @Getter
-    @Setter
     private String serverFileName;
-    @Getter
-    @Setter
     private String filePath;
 
     public DefaultImageDTO(Long id, String category, String filePath) {
@@ -26,5 +18,4 @@ public class DefaultImageDTO {
         this.category = category;
         this.filePath = filePath;
     }
-
 }

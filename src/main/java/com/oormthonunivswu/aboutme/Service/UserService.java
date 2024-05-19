@@ -134,4 +134,7 @@ public class UserService {
         return userOptional.orElse(null);
 
     }
+    public User findById(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
 }

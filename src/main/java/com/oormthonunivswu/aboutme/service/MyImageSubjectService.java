@@ -19,7 +19,7 @@ public class MyImageSubjectService {
     @Autowired
     private MyImageService myImageService;
 
-    public MyImageSubjectDTO getMyImageSubject(UUID id){
+    public MyImageSubjectDTO getMyImageSubject(Long id){
         User user = userService.findById(id);
 
 
