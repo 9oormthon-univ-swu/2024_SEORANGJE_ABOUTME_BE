@@ -58,8 +58,8 @@ public class UserController {
         return userService.getUrl(principal);
     }
 
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable UUID userId) {
-        return userService.getUserById(userId);
+    @GetMapping("/{uuid}")
+    public User getUser(@PathVariable UUID uuid) {
+        return userService.getUserByUuid(uuid);
     }
 }
