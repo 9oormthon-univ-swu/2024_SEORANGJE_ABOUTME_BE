@@ -23,6 +23,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  cloud:
+    aws:
+      s3:
+        bucket: 2024aboutme
+      stack:
+        auto: false
+      region: ap-northeast-2
+      credentials:
+        accessKey: ${s3_accessKey}
+        secretKey: ${s3_secretKey}
 
 # 시크릿 키값
 jwt:
