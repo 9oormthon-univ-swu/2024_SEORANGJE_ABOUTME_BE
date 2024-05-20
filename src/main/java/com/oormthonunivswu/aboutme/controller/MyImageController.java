@@ -3,17 +3,16 @@ package com.oormthonunivswu.aboutme.Controller;
 
 import com.oormthonunivswu.aboutme.Dto.DefaultImageDTO;
 import com.oormthonunivswu.aboutme.Dto.MyImageDTO;
+import com.oormthonunivswu.aboutme.Dto.MyImageRequestDTO;
 import com.oormthonunivswu.aboutme.Entity.DefaultImageEntity;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import com.oormthonunivswu.aboutme.Service.DefaultImageService;
 import com.oormthonunivswu.aboutme.Service.MyImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,5 +38,15 @@ public class MyImageController {
                 .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getFilePath()))
                 .collect(Collectors.toList());
 
+    }
+
+    @PostMapping("/{userId}")
+    public String createMyImage(@PathVariable Long userId, @ModelAttribute MyImageRequestDTO requestDTO) {
+        try {
+            myImageService.createMyImage(userId, requestDTO);
+            return "My image created successfully";
+        } catch (IOException e) {
+            return "Failed to create my image: " + e.getMessage();
+        }
     }
 }
