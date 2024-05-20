@@ -15,14 +15,16 @@ import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import com.oormthonunivswu.aboutme.Service.DefaultImageService;
 import com.oormthonunivswu.aboutme.Service.MyImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 
 @RestController
 @RequestMapping("/api/MyImage")
@@ -44,7 +46,7 @@ public class MyImageController {
         return myImageService.getAllMyImagesByUserId(user_id);
     }
     public List<DefaultImageDTO> getDefaultImages(@PathVariable Long user_id){
-        User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("User not found"));
+        User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다"));
         List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
         return defaultImageEntities.stream()
                 .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getFilePath()))
@@ -67,6 +69,19 @@ public class MyImageController {
                 .orElseThrow(() -> new RuntimeException("마이이미지를 찾을 수 없습니다: " + myimageId));
 
         Map<String, String> imageFilePaths = new HashMap<>();
+        Map<String, String> imageFileName = new HashMap<>();
+
+        // 주제 9개 컬럼 중에서 null이 아닌 값을 가진 주제들을 찾아서 해당 주제의 이름 반환
+        addImageFileName("animal", "떠오르는 동물", imageFileName);
+        addImageFileName("charac", "닮은 캐릭터", imageFileName);
+        addImageFileName("color", "어울리는 색깔", imageFileName);
+        addImageFileName("flower", "어울리는 꽃", imageFileName);
+        addImageFileName("food", "생각나는 음식", imageFileName);
+        addImageFileName("hobby", "어울리는 취미", imageFileName);
+        addImageFileName("job", "어울리는 직업", imageFileName);
+        addImageFileName("place", "어울리는 장소", imageFileName);
+        addImageFileName("season", "어울리는 계절", imageFileName);
+
 
         // 주제 9개 컬럼 중에서 null이 아닌 값을 가진 주제들을 찾아서 해당 이미지의 ID를 가져와서 처리합니다.
         addImageFilePath("animal", myImageEntity.getAnimal(), imageFilePaths);
@@ -82,7 +97,9 @@ public class MyImageController {
         return new MyImageDetailDTO(
                 myImageEntity.getGuestNickname(),
                 myImageEntity.getImageComment(),
+                imageFileName,
                 imageFilePaths
+
         );
     }
 
@@ -92,5 +109,9 @@ public class MyImageController {
                     .orElseThrow(() -> new RuntimeException("이미지를 찾을 수 없습니다: " + imageEntity.getId()));
             imageFilePaths.put(subject, foundImageEntity.getFilePath());
         }
+    }
+
+    private void addImageFileName(String subject, String imageName, Map<String, String> imageFileName) {
+        imageFileName.put(subject,imageName);
     }
 }

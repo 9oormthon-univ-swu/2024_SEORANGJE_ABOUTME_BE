@@ -1,6 +1,5 @@
 package com.oormthonunivswu.aboutme.Dto;
 
-import java.util.List;
 import java.util.Map;
 
 public class MyImageDetailDTO {
