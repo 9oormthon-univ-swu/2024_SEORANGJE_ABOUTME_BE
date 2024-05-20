@@ -2,7 +2,6 @@ package com.oormthonunivswu.aboutme.Controller;
 
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
-import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}")
-    public User getUser(@PathVariable UUID uuid) {
-        return userService.getUserByUuid(uuid);
+    public Map<String, Object> getUserImages(@PathVariable UUID uuid) {
+        return userService.getUserImagesByUuid(uuid);
     }
 }

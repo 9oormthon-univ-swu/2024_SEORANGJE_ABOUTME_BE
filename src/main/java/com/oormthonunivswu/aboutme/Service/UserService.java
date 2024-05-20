@@ -4,6 +4,7 @@ import com.oormthonunivswu.aboutme.Config.JwtProvider;
 import com.oormthonunivswu.aboutme.Config.PrincipalDetails;
 import com.oormthonunivswu.aboutme.Dto.JoinRequestDto;
 import com.oormthonunivswu.aboutme.Dto.LoginRequestDto;
+import com.oormthonunivswu.aboutme.Dto.MyImageDTO;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -129,12 +127,27 @@ public class UserService {
         return response;
     }
 
-    public User getUserByUuid(UUID uuid) {
-        Optional<User> userOptional = userRepository.findByUuid(uuid);
-        return userOptional.orElse(null);
 
+    private final MyImageService myImageService;
+
+    public Map<String, Object> getUserImagesByUuid(UUID uuid) {
+        Optional<User> userOptional = userRepository.findByUuid(uuid);
+        if (!userOptional.isPresent()) {
+            return Collections.singletonMap("message", "사용자의 게시판에 마이이미지가 생성되지 않았습니다.");
+        }
+
+        User user = userOptional.get();
+        List<MyImageDTO> images = myImageService.getAllMyImagesByUserId(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userId", user.getId());
+        response.put("images", images);
+
+        return response;
     }
+
     public User findById(Long id){
         return userRepository.findById(id).orElse(null);
     }
+
 }
