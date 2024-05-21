@@ -50,7 +50,7 @@ public class MyImageService {
 
         // 그 외의 경우에는 이미지 목록을 반환합니다.
         return myImageEntities.stream()
-                .map(image-> new MyImageDTO(image.getId(), image.getGuestNickname(),getRandomForderImageUrl()))
+                .map(image-> new MyImageDTO(image.getId(), image.getGuestNickname(),image.getFolderImageUrl()))
                 .collect(Collectors.toList());
     }
 
