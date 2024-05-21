@@ -72,7 +72,7 @@ public class UserService {
         User savedUser = userRepository.save(newUser);
 
         // URL 생성 및 설정
-        String url = "https://port-0-seorangje-aboutme-be-2024-1ru12mlwc1mxvw.sel5.cloudtype.app/" + uuid;
+        String url = "https://aboutme.d1pt3wqvnh1bfv.amplifyapp.com/" + uuid;
         savedUser.setUrl(url);
 
 
