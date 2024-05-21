@@ -8,12 +8,13 @@ import lombok.Data;
 public class MyImageDTO {
     private Long id;
     private String guestNickname;
-    private String imageComment;
+    private String folderImageUrl;
     private String errorMessage;
 
-    public MyImageDTO(Long id, String guestNickname) {
+    public MyImageDTO(Long id, String guestNickname, String folderImageUrl) {
         this.id = id;
         this.guestNickname = guestNickname;
+        this.folderImageUrl = folderImageUrl;
     }
 
     // 에러 메시지를 포함한 생성자

@@ -1,6 +1,7 @@
 package com.oormthonunivswu.aboutme.Controller;
 
 import com.oormthonunivswu.aboutme.Dto.DefaultImageDTO;
+import com.oormthonunivswu.aboutme.Dto.UserDefaultImageDTO;
 import com.oormthonunivswu.aboutme.Entity.DefaultImageEntity;
 import com.oormthonunivswu.aboutme.Entity.User;
 import com.oormthonunivswu.aboutme.Repository.UserRepository;
@@ -44,7 +45,9 @@ public class DefaultImageController {
                     .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getImageName(), image.getImageDetail(), image.getFilePath()))
                     .collect(Collectors.toList());
 
-            return ResponseEntity.ok(defaultImageDTOS);
+            UserDefaultImageDTO userDefaultImageDTO = new UserDefaultImageDTO(user.getId(),user.getUsername(),defaultImageDTOS);
+
+            return ResponseEntity.ok(userDefaultImageDTO);
 
         } catch (RuntimeException e) {
             Map<String, String> response = new HashMap<>();

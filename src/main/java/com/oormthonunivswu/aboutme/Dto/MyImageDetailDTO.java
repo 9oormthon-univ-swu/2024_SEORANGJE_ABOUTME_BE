@@ -1,9 +1,13 @@
 package com.oormthonunivswu.aboutme.Dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 
+@Setter
+@Getter
 public class MyImageDetailDTO {
-
     private String guestNickname;
     private String imageComment;
     private Map<String,String>  imageFileName;
@@ -16,36 +20,5 @@ public class MyImageDetailDTO {
         this.imageFilePaths = imageFilePaths;
     }
 
-    public String getGuestNickname() {
-        return guestNickname;
-    }
-
-    public void setGuestNickname(String guestNickname) {
-        this.guestNickname = guestNickname;
-    }
-
-    public String getImageComment() {
-        return imageComment;
-    }
-
-    public void setImageComment(String imageComment) {
-        this.imageComment = imageComment;
-    }
-
-    public Map<String, String> getImageFilePaths() {
-        return imageFilePaths;
-    }
-
-    public void setImageFilePaths(Map<String, String> imageFilePaths) {
-        this.imageFilePaths = imageFilePaths;
-    }
-
-    public Map<String, String> getImageFileName() {
-        return imageFileName;
-    }
-
-    public void setImageFileName(Map<String, String> imageFileName) {
-        this.imageFileName = imageFileName;
-    }
 
 }

@@ -26,14 +26,5 @@ public class DefaultImageEntity {
     @Column(name = "file_path")
     private String filePath;
 
-    @Builder
-    public DefaultImageEntity(String category, String originalFileName, String serverFileName, String ImageDetail, String ImageName, String filePath) {
-        this.category = category;
-        this.originalFileName=originalFileName;
-        this.serverFileName=getServerFileName();
-        this.ImageName=getImageName();
-        this.ImageDetail=getImageDetail();
-        this.filePath = filePath;
-    }
 
 }

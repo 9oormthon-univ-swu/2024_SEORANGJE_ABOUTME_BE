@@ -28,6 +28,9 @@ public class MyImageEntity {
     @Column(name = "image_comment")
     private String imageComment;
 
+    @Column(name = "folder_image_url")
+    private String folderImageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flower")
     private ImageEntity flower;
@@ -68,7 +71,8 @@ public class MyImageEntity {
     @Builder
     public MyImageEntity(User userId, String guestNickname, String imageComment,
                          ImageEntity flower, ImageEntity animal, ImageEntity season, ImageEntity color,
-                         ImageEntity charac, ImageEntity place, ImageEntity food, ImageEntity hobby, ImageEntity job) {
+                         ImageEntity charac, ImageEntity place, ImageEntity food, ImageEntity hobby, ImageEntity job,
+                         String folderImageUrl) {
         this.userId = userId;
         this.guestNickname = guestNickname;
         this.imageComment = imageComment;
@@ -81,5 +85,6 @@ public class MyImageEntity {
         this.food = food;
         this.hobby = hobby;
         this.job = job;
+        this.folderImageUrl=folderImageUrl;
     }
 }
