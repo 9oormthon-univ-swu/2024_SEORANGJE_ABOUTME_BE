@@ -19,15 +19,20 @@ public class DefaultImageEntity {
     private String originalFileName;
     @Column(name = "server_file_name")
     private String serverFileName;
+    @Column(name = "Image_detail")
+    private String ImageDetail;
+    @Column(name = "Image_name")
+    private String ImageName;
     @Column(name = "file_path")
     private String filePath;
 
     @Builder
-    public DefaultImageEntity(String category, String originalFileName,
-                              String serverFileName, String filePath) {
+    public DefaultImageEntity(String category, String originalFileName, String serverFileName, String ImageDetail, String ImageName, String filePath) {
         this.category = category;
-        this.originalFileName = originalFileName;
-        this.serverFileName = serverFileName;
+        this.originalFileName=originalFileName;
+        this.serverFileName=getServerFileName();
+        this.ImageName=getImageName();
+        this.ImageDetail=getImageDetail();
         this.filePath = filePath;
     }
 

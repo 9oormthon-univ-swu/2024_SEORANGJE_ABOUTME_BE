@@ -27,7 +27,7 @@ public class DefaultImageController {
         User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("User not found"));
         List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
         return defaultImageEntities.stream()
-                .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getFilePath()))
+                .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getImageName(), image.getImageDetail(),image.getFilePath()))
                 .collect(Collectors.toList());
 
     }
