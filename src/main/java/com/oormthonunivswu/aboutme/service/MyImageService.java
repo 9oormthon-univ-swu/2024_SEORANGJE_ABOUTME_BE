@@ -33,12 +33,12 @@ public class MyImageService {
     private S3Service s3Service;
 
     private static final String[] FOLDER_IMAGE_URLS = {
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8F%B4%EB%8D%94.png",
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EC%9D%8C%EB%B0%98.png",
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EC%BB%B4%ED%93%A8%ED%84%B0.png",
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8E%B8%EC%A7%80%EB%B4%89%ED%88%AC.png",
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8E%B8%EC%A7%80%EB%B4%89%ED%88%AC.png",
-            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%95%98%ED%8A%B8+%ED%8E%B8%EC%A7%80%EC%A7%80.png"
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EB%85%B8%EB%9E%80+%ED%8E%B8%EC%A7%80%EB%B4%89%ED%88%AC.svg",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EC%BB%B4%ED%93%A8%ED%84%B0.svg",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8C%8C%EB%9E%80+%ED%8E%B8%EC%A7%80%EC%A7%80.svg",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%95%91%ED%81%AC+%EC%9D%8C%EB%B0%98.svg",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%95%91%ED%81%AC%EB%94%94%EC%8A%A4%ED%81%AC.svg",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8F%B4%EB%8D%94.svg"
     };
 
     public List<MyImageDTO> getAllMyImagesByUserId(User user_id){
