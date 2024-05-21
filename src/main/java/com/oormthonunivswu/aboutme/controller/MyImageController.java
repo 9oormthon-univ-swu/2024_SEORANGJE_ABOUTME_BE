@@ -16,6 +16,7 @@ import com.oormthonunivswu.aboutme.Service.DefaultImageService;
 import com.oormthonunivswu.aboutme.Service.MyImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -23,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-//@ResponseStatus(value = HttpStatus.NOT_FOUND)
 
 @RestController
 @RequestMapping("/api/MyImage")
@@ -41,28 +40,59 @@ public class MyImageController {
     @Autowired
     private ImageRepository imageRepository;
 
+    //Myimage 목록 api
     @GetMapping("/List/{user_id}")
-    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable User user_id){
-        return myImageService.getAllMyImagesByUserId(user_id);
-    }
-    public List<DefaultImageDTO> getDefaultImages(@PathVariable Long user_id){
-        User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다"));
-        List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
-        return defaultImageEntities.stream()
-                .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getImageName(), image.getImageDetail(), image.getFilePath()))
-                .collect(Collectors.toList());
-
-    }
-
-    @PostMapping("/{userId}")
-    public String createMyImage(@PathVariable Long userId, @ModelAttribute MyImageRequestDTO requestDTO) {
+//    public List<MyImageDTO> getAllMyImagesByUserId(@PathVariable User user_id){
+//        return myImageService.getAllMyImagesByUserId(user_id);
+//    }
+//    public List<DefaultImageDTO> getDefaultImages(@PathVariable Long user_id){
+//        User user = userRepository.findById(user_id).orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다"));
+//        List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
+//        return defaultImageEntities.stream()
+//                .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getImageName(), image.getImageDetail(), image.getFilePath()))
+//                .collect(Collectors.toList());
+//
+//    }
+    public ResponseEntity<?> getDefaultImages(@PathVariable Long user_id) {
         try {
-            myImageService.createMyImage(userId, requestDTO);
-            return "My image created successfully";
-        } catch (IOException e) {
-            return "Failed to create my image: " + e.getMessage();
+            User user = userRepository.findById(user_id)
+                    .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
+            List<DefaultImageEntity> defaultImageEntities = defaultImageService.getDefaultImagesByUserCategory(user);
+
+            if (defaultImageEntities.isEmpty()) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "생성된 마이 이미지가 없습니다");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+            List<DefaultImageDTO> defaultImageDTOS = defaultImageEntities.stream()
+                    .map(image -> new DefaultImageDTO(image.getId(), image.getCategory(), image.getImageName(), image.getImageDetail(), image.getFilePath()))
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(defaultImageDTOS);
+
+        } catch (RuntimeException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
+    //Myimage 저장 api
+    @PostMapping("/{userId}")
+    public ResponseEntity<Map<String,String>> createMyImage(@PathVariable Long userId, @ModelAttribute MyImageRequestDTO requestDTO) {
+        Map<String,String> response = new HashMap<>();
+        try {
+            myImageService.createMyImage(userId, requestDTO);
+            response.put("message", "마이 이미지 저장 성공");
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            response.put("error", "마이 이미지 저장 실패 : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    //myimage 상세 보기 api
     @GetMapping("/{myimage_id}")
     public MyImageDetailDTO getMyImageDetail(@PathVariable("myimage_id") Long myimageId) {
         MyImageEntity myImageEntity = myImageRepository.findById(myimageId)
