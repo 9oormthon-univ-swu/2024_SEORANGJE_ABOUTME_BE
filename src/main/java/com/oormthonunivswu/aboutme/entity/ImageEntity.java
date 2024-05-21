@@ -30,9 +30,9 @@ public class ImageEntity {
     public ImageEntity(String category, String originalFileName, String serverFileName, String ImageDetail, String ImageName, String filePath) {
         this.category = category;
         this.originalFileName=originalFileName;
-        this.serverFileName=getServerFileName();
-        this.ImageName=getImageName();
-        this.ImageDetail=getImageDetail();
+        this.serverFileName=serverFileName;
+        this.ImageName=ImageName;
+        this.ImageDetail=ImageDetail;
         this.filePath = filePath;
     }
 }
