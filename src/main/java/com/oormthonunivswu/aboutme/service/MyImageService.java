@@ -13,13 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class MyImageService {
@@ -36,6 +32,15 @@ public class MyImageService {
     @Autowired
     private S3Service s3Service;
 
+    private static final String[] FOLDER_IMAGE_URLS = {
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8F%B4%EB%8D%94.png",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EC%9D%8C%EB%B0%98.png",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%EC%BB%B4%ED%93%A8%ED%84%B0.png",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8E%B8%EC%A7%80%EB%B4%89%ED%88%AC.png",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%8E%B8%EC%A7%80%EB%B4%89%ED%88%AC.png",
+            "https://2024aboutme.s3.ap-northeast-2.amazonaws.com/folder_%ED%95%98%ED%8A%B8+%ED%8E%B8%EC%A7%80%EC%A7%80.png"
+    };
+
     public List<MyImageDTO> getAllMyImagesByUserId(User user_id){
         List<MyImageEntity> myImageEntities = myImageRepository.findByUserId(user_id);
         // myImageEntities가 null이면 이미지가 생성되지 않았음을 프론트엔드로 알려줍니다.
@@ -45,11 +50,12 @@ public class MyImageService {
 
         // 그 외의 경우에는 이미지 목록을 반환합니다.
         return myImageEntities.stream()
-                .map(image-> new MyImageDTO(image.getId(), image.getGuestNickname()))
+                .map(image-> new MyImageDTO(image.getId(), image.getGuestNickname(),getRandomForderImageUrl()))
                 .collect(Collectors.toList());
     }
 
     public void createMyImage(Long userId, MyImageRequestDTO requestDTO) throws IOException {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
 
@@ -83,6 +89,9 @@ public class MyImageService {
             }
         }
 
+        String randomFolderImageUrl = getRandomForderImageUrl();
+
+
         MyImageEntity myImageEntity = MyImageEntity.builder()
                 .userId(user)
                 .guestNickname(requestDTO.getGuestNickname())
@@ -96,9 +105,16 @@ public class MyImageService {
                 .food(savedImages.get("food"))
                 .hobby(savedImages.get("hobby"))
                 .job(savedImages.get("job"))
+                .folderImageUrl(randomFolderImageUrl)//랜덤 폴더 이미지 url 추가
                 .build();
 
         myImageRepository.save(myImageEntity);
+    }
+
+    private String getRandomForderImageUrl(){
+        Random random = new Random();
+        int index = random.nextInt(FOLDER_IMAGE_URLS.length);
+        return FOLDER_IMAGE_URLS[index];
     }
 
 }

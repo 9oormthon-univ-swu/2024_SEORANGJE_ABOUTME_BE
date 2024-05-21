@@ -1,16 +1,13 @@
 package com.oormthonunivswu.aboutme.Dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 
+@Setter
+@Getter
 public class MyImageSubjectDTO {
     private Map<String, Boolean> subjects;
-
-    public  Map<String, Boolean> getSubjects(){
-        return subjects;
-    }
-
-    public void setSubjects(Map<String, Boolean>subjects){
-        this.subjects = subjects;
-    }
 
 }
