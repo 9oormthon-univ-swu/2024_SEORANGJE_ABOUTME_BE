@@ -13,6 +13,11 @@ spring:
     url: jdbc:mysql://${DB_url}:${DB_port}/${DB_dataBaseName}?serverTimezone=Asia/Seoul
     username: ${DB_name} #유저네임
     password: ${DB_password} #암호
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
   jpa:
     hibernate:
