@@ -71,7 +71,7 @@ public class MyImageService {
                 ImageEntity imageEntity = ImageEntity.builder()
                         .originalFileName(entry.getValue().getOriginalFilename())
                         .serverFileName(imageUrl)
-                        .category(entry.getKey())
+//                        .category(entry.getKey())
                         .filePath(imageUrl)
                         .build();
                 savedImages.put(entry.getKey(), imageRepository.save(imageEntity));
